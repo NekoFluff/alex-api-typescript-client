@@ -1,2 +1,2 @@
 additionalProperties:
-  invokerPackage: AlexApiClient
+  npmName: alex-api-typescript-client
