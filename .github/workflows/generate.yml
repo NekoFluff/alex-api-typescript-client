@@ -53,7 +53,7 @@ jobs:
       - name: Generate Client
         uses: openapi-generators/openapitools-generator-action@v1
         with:
-          generator: typescript-axios
+          generator: typescript-node
           generator-tag: v6.4.0
           openapi-file: openapi.yaml
           config-file: config.yml
