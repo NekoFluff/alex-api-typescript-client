@@ -5,7 +5,7 @@ on:
     types: generate-client
     inputs:
       specLocation:
-        description: The filepath to the openapi spec.
+        description: The file name of the openapi spec.
         required: false
         type: string
         default: openapi.yaml
@@ -16,10 +16,6 @@ on:
         default: config.yml
       templateLocation:
         description: The path to the openapi template directory.
-        required: false
-        type: string
-      payload:
-        description: The base64 encoded openapi spec. Written to the spec filepath if present.
         required: false
         type: string
       version:
@@ -49,7 +45,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Download Release Asset
         uses: dsaltares/fetch-gh-release-asset@master
-        if: "${{ inputs.release != '' }}"
+        if: "${{ github.event.client_payload.release }}"
         with:
           repo: ${{ inputs.repository }}
           version: ${{ github.event.client_payload.release }}
