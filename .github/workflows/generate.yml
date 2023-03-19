@@ -31,11 +31,6 @@ on:
         description: The name of the package to generate the code in.
         required: true
         type: string
-      release:
-        description: The ID of the release where the spec asset is located.
-        required: false
-        type: string
-        default: ${{ github.event.client_payload.release }}
       repository:
         description: The repository that triggered the client generation.
         required: true
@@ -57,7 +52,7 @@ jobs:
         if: "${{ inputs.release != '' }}"
         with:
           repo: ${{ inputs.repository }}
-          version: ${{ inputs.release }}
+          version: ${{ github.event.client_payload.release }}
           file: ${{ inputs.specLocation }}
           target: ${{ inputs.specLocation }}
           token: ${{ secrets.token }}
@@ -89,7 +84,7 @@ jobs:
         uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: typescript-axios
-          generator-tag: ${{ inputs.version }}
+          generator-tag: ${{ github.event.client_payload.release }}
           openapi-file: ${{ inputs.specLocation }}
           command-args: |
             --git-user-id ${{ github.repository_owner }} --git-repo-id ${{ github.event.repository.name }} \
