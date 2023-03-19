@@ -11,9 +11,6 @@ on:
       templateLocation:
         description: The path to the openapi template directory.
         required: false
-    secrets:
-      token:
-        required: true
 
 jobs:
   generate-client:
@@ -30,7 +27,7 @@ jobs:
           version: ${{ github.event.client_payload.release }}
           file: openapi.yaml
           target: openapi.yaml
-          token: ${{ secrets.token }}
+          token: ${{ secrets.CLONE_PAT }}
       - name: Write Spec
         run: |
           if [[ ! -z "${{ inputs.payload }}" ]]
