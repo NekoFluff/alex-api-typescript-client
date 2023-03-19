@@ -24,7 +24,7 @@ jobs:
         if: "${{ github.event.client_payload.release }}"
         with:
           repo: NekoFluff/alex-api
-          version: "tags/${{ github.event.client_payload.release }}"
+          version: "tags/v${{ github.event.client_payload.release }}"
           file: openapi.yaml
           target: openapi.yaml
           token: ${{ secrets.CLONE_PAT }}
