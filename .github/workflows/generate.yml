@@ -1,6 +1,8 @@
 name: OpenAPI Generate Client
+
 on:
-  workflow_call:
+  repository_dispatch:
+    types: generate-client
     inputs:
       specLocation:
         description: The filepath to the openapi spec.
@@ -11,6 +13,7 @@ on:
         description: The filepath to the openapi config file.
         required: false
         type: string
+        default: config.yml
       templateLocation:
         description: The path to the openapi template directory.
         required: false
@@ -37,10 +40,12 @@ on:
         description: The ID of the release where the spec asset is located.
         required: false
         type: string
+        default: ${{ github.event.client_payload.release }}
       repository:
         description: The repository that triggered the client generation.
         required: true
         type: string
+        default: NekoFluff/alex-api
     secrets:
       token:
         required: true
