@@ -4,10 +4,6 @@ on:
   repository_dispatch:
     types: generate-client
     inputs:
-      configLocation:
-        description: The filepath to the openapi config file.
-        required: true
-        type: string
       templateLocation:
         description: The path to the openapi template directory.
         required: false
@@ -44,9 +40,8 @@ jobs:
           version: info.version
       - name: Set Config File
         id: set-config
-        if: ${{ inputs.configLocation }}
         run: |
-          echo 'OPENAPI_CONFIG=-c ${{ inputs.configLocation }}' >> $GITHUB_OUTPUT
+          echo 'OPENAPI_CONFIG=-c config.yml' >> $GITHUB_OUTPUT
       - name: Set Template Dir
         id: set-template
         if: ${{ inputs.templateLocation }}
@@ -58,7 +53,7 @@ jobs:
           generator: typescript-axios
           generator-tag: ${{ github.event.client_payload.release }}
           openapi-file: openapi.yaml
-          config-file: ${{ inputs.configLocation }}
+          config-file: config.yml
           command-args: |
             --git-user-id ${{ github.repository_owner }} --git-repo-id ${{ github.event.repository.name }} \
             ${{ steps.set-config.outputs.OPENAPI_CONFIG }} \
