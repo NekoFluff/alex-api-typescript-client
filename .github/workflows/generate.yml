@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Remove Generated Files
+        continue-on-error: true
+        run: xargs -I{} rm -rf "{}" < .openapi-generator/FILES
       - name: Download OpenAPI artifact
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2
