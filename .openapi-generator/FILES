@@ -12,3 +12,5 @@ model/marketData.ts
 model/models.ts
 model/recipe.ts
 model/twitterMedia.ts
+package.json
+tsconfig.json
