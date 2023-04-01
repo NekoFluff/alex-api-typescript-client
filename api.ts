@@ -272,7 +272,7 @@ export interface TwitterMedia {
      * @type {string}
      * @memberof TwitterMedia
      */
-    'created_at': string;
+    'createdAt': string;
 }
 
 /**
