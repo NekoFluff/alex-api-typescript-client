@@ -17,7 +17,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Remove Generated Files
         continue-on-error: true
-        run: xargs -I{} rm -rf "{}" < .openapi-generator/FILES
+        run: |
+          xargs -I{} rm -rf "{}" < .openapi-generator/FILES
+          rm -rf *.ts
       - name: Download OpenAPI artifact
         id: download-artifact
         uses: dawidd6/action-download-artifact@v2
