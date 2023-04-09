@@ -344,12 +344,13 @@ export interface TwitterMedia {
 export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Track Page View
+         * Track a page view using referrer url. The path in the request body will override the referrer path.
          * @summary Track Page View
+         * @param {PageView} [pageView] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pageViewed: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        pageViewed: async (pageView?: PageView, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/pageview`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -364,9 +365,12 @@ export const AnalyticsApiAxiosParamCreator = function (configuration?: Configura
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(pageView, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -384,13 +388,14 @@ export const AnalyticsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AnalyticsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Track Page View
+         * Track a page view using referrer url. The path in the request body will override the referrer path.
          * @summary Track Page View
+         * @param {PageView} [pageView] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async pageViewed(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.pageViewed(options);
+        async pageViewed(pageView?: PageView, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.pageViewed(pageView, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -404,13 +409,14 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
     const localVarFp = AnalyticsApiFp(configuration)
     return {
         /**
-         * Track Page View
+         * Track a page view using referrer url. The path in the request body will override the referrer path.
          * @summary Track Page View
+         * @param {PageView} [pageView] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        pageViewed(options?: any): AxiosPromise<PageView> {
-            return localVarFp.pageViewed(options).then((request) => request(axios, basePath));
+        pageViewed(pageView?: PageView, options?: any): AxiosPromise<PageView> {
+            return localVarFp.pageViewed(pageView, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -423,14 +429,15 @@ export const AnalyticsApiFactory = function (configuration?: Configuration, base
  */
 export class AnalyticsApi extends BaseAPI {
     /**
-     * Track Page View
+     * Track a page view using referrer url. The path in the request body will override the referrer path.
      * @summary Track Page View
+     * @param {PageView} [pageView] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AnalyticsApi
      */
-    public pageViewed(options?: AxiosRequestConfig) {
-        return AnalyticsApiFp(this.configuration).pageViewed(options).then((request) => request(this.axios, this.basePath));
+    public pageViewed(pageView?: PageView, options?: AxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).pageViewed(pageView, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
