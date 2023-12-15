@@ -34,31 +34,31 @@ export interface ComputedRecipe {
      * @type {string}
      * @memberof ComputedRecipe
      */
-    'outputItem': string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof ComputedRecipe
      */
-    'facility': string;
+    'facility'?: string;
     /**
      * 
      * @type {number}
      * @memberof ComputedRecipe
      */
-    'numFacilitiesNeeded': number;
+    'numFacilitiesNeeded'?: number;
     /**
      * 
      * @type {object}
      * @memberof ComputedRecipe
      */
-    'itemsConsumedPerSec': object;
+    'itemsConsumedPerSec'?: object;
     /**
      * 
      * @type {number}
      * @memberof ComputedRecipe
      */
-    'secondsSpentPerCraft': number;
+    'secondsSpentPerCraft'?: number;
     /**
      * 
      * @type {number}
@@ -70,7 +70,7 @@ export interface ComputedRecipe {
      * @type {string}
      * @memberof ComputedRecipe
      */
-    'usedFor': string;
+    'usedFor'?: string;
     /**
      * 
      * @type {number}
@@ -82,54 +82,30 @@ export interface ComputedRecipe {
      * @type {string}
      * @memberof ComputedRecipe
      */
-    'action'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ComputedRecipe
-     */
-    'quantityProduced'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ComputedRecipe
-     */
-    'timeToProduce'?: number;
-    /**
-     * 
-     * @type {MarketData}
-     * @memberof ComputedRecipe
-     */
-    'marketData'?: MarketData;
-    /**
-     * 
-     * @type {string}
-     * @memberof ComputedRecipe
-     */
     'image'?: string;
 }
 /**
  * 
  * @export
- * @interface ComputedRecipeRequest
+ * @interface GetDSPComputedRecipeRequestInner
  */
-export interface ComputedRecipeRequest {
+export interface GetDSPComputedRecipeRequestInner {
     /**
      * 
      * @type {string}
-     * @memberof ComputedRecipeRequest
+     * @memberof GetDSPComputedRecipeRequestInner
      */
     'name': string;
     /**
      * 
      * @type {number}
-     * @memberof ComputedRecipeRequest
+     * @memberof GetDSPComputedRecipeRequestInner
      */
     'rate': number;
     /**
      * 
      * @type {{ [key: string]: number; }}
-     * @memberof ComputedRecipeRequest
+     * @memberof GetDSPComputedRecipeRequestInner
      */
     'requirements'?: { [key: string]: number; };
 }
@@ -224,37 +200,61 @@ export interface Recipe {
      * @type {string}
      * @memberof Recipe
      */
-    'outputItem': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Recipe
-     */
-    'outputItemCount': number;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof Recipe
      */
-    'facility': string;
+    'action'?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Recipe
      */
-    'time': number;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof Recipe
-     */
-    'materials': { [key: string]: string; };
+    'facility'?: string;
     /**
      * 
      * @type {string}
      * @memberof Recipe
      */
     'image'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof Recipe
+     */
+    'ingredients'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof Recipe
+     */
+    'quantityProduced'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Recipe
+     */
+    'minProduced'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Recipe
+     */
+    'maxProduced'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Recipe
+     */
+    'timeToProduce'?: number;
+    /**
+     * 
+     * @type {MarketData}
+     * @memberof Recipe
+     */
+    'marketData'?: MarketData;
 }
 /**
  * 
@@ -452,11 +452,11 @@ export const BlackDesertOnlineApiAxiosParamCreator = function (configuration?: C
          * Get the computed recipe
          * @summary Get the computed recipe
          * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-         * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+         * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBDOComputedRecipe: async (group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getBDOComputedRecipe: async (group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bdo/computedRecipes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -531,11 +531,11 @@ export const BlackDesertOnlineApiFp = function(configuration?: Configuration) {
          * Get the computed recipe
          * @summary Get the computed recipe
          * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-         * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+         * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBDOComputedRecipe(group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ComputedRecipe>>> {
+        async getBDOComputedRecipe(group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ComputedRecipe>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBDOComputedRecipe(group, recipeRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -563,11 +563,11 @@ export const BlackDesertOnlineApiFactory = function (configuration?: Configurati
          * Get the computed recipe
          * @summary Get the computed recipe
          * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-         * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+         * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBDOComputedRecipe(group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options?: any): AxiosPromise<Array<ComputedRecipe>> {
+        getBDOComputedRecipe(group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options?: any): AxiosPromise<Array<ComputedRecipe>> {
             return localVarFp.getBDOComputedRecipe(group, recipeRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -593,12 +593,12 @@ export class BlackDesertOnlineApi extends BaseAPI {
      * Get the computed recipe
      * @summary Get the computed recipe
      * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-     * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+     * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BlackDesertOnlineApi
      */
-    public getBDOComputedRecipe(group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options?: AxiosRequestConfig) {
+    public getBDOComputedRecipe(group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options?: AxiosRequestConfig) {
         return BlackDesertOnlineApiFp(this.configuration).getBDOComputedRecipe(group, recipeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -625,11 +625,11 @@ export const DysonSphereProgramApiAxiosParamCreator = function (configuration?: 
          * Get the computed recipe
          * @summary Get the computed recipe
          * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-         * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+         * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDSPComputedRecipe: async (group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDSPComputedRecipe: async (group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dsp/computedRecipes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -734,11 +734,11 @@ export const DysonSphereProgramApiFp = function(configuration?: Configuration) {
          * Get the computed recipe
          * @summary Get the computed recipe
          * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-         * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+         * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDSPComputedRecipe(group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ComputedRecipe>>> {
+        async getDSPComputedRecipe(group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ComputedRecipe>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPComputedRecipe(group, recipeRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -776,11 +776,11 @@ export const DysonSphereProgramApiFactory = function (configuration?: Configurat
          * Get the computed recipe
          * @summary Get the computed recipe
          * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-         * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+         * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDSPComputedRecipe(group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options?: any): AxiosPromise<Array<ComputedRecipe>> {
+        getDSPComputedRecipe(group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options?: any): AxiosPromise<Array<ComputedRecipe>> {
             return localVarFp.getDSPComputedRecipe(group, recipeRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -815,12 +815,12 @@ export class DysonSphereProgramApi extends BaseAPI {
      * Get the computed recipe
      * @summary Get the computed recipe
      * @param {boolean} [group] Whether or not to group the recipes in the computed recipe up by name
-     * @param {Array<ComputedRecipeRequest>} [recipeRequest] 
+     * @param {Array<GetDSPComputedRecipeRequestInner>} [recipeRequest] A JSON object containing your recipe requirements
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DysonSphereProgramApi
      */
-    public getDSPComputedRecipe(group?: boolean, recipeRequest?: Array<ComputedRecipeRequest>, options?: AxiosRequestConfig) {
+    public getDSPComputedRecipe(group?: boolean, recipeRequest?: Array<GetDSPComputedRecipeRequestInner>, options?: AxiosRequestConfig) {
         return DysonSphereProgramApiFp(this.configuration).getDSPComputedRecipe(group, recipeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
